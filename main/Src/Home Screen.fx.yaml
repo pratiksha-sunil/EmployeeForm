@@ -1,0 +1,531 @@
+"'Home Screen' As screen":
+    Fill: =RGBA(186, 202, 226, .3)
+    LoadingSpinnerColor: =App.Theme.Colors.Primary
+
+    "'Home Container' As groupContainer.manualLayoutContainer":
+        DropShadow: =DropShadow.Semibold
+        Fill: =RGBA(255, 255, 255, 1)
+        Height: =647
+        RadiusBottomLeft: =4
+        RadiusBottomRight: =4
+        RadiusTopLeft: =4
+        RadiusTopRight: =4
+        Width: =854
+        X: =238
+        Y: =30
+        ZIndex: =1
+
+        "'Employee Form' As form.PowerApps_CoreControls_Form":
+            BorderColor: =App.Theme.Colors.Darker40
+            DataSource: =EmployeeValidation
+            DefaultMode: =FormMode.New
+            Height: =615
+            Item: =lastSubmitted
+            NumberOfColumns: =1
+            OnSuccess: |-
+                =Notify("Employee information saved successfully",NotificationType.Success); 
+                Set(lastSubmitted,'Employee Form'.LastSubmit);
+            UseFluentV9Cards: =true
+            Width: =810
+            X: =25
+            Y: =22
+            ZIndex: =1
+
+            Name_DataCard2 As typedDataCard.fluentV9TextualEditCard:
+                BorderColor: =App.Theme.Colors.Darker40
+                BorderStyle: =BorderStyle.Solid
+                DataField: ="Name"
+                Default: =ThisItem.Name
+                DisplayMode: =Parent.DisplayMode
+                DisplayName: =DataSourceInfo([@EmployeeValidation],DataSourceInfo.DisplayName,Name)
+                Fill: =RGBA(0, 0, 0, 0)
+                Height: =80
+                MaxLength: =DataSourceInfo([@EmployeeValidation], DataSourceInfo.MaxLength, Name)
+                Required: =false
+                Update: =DataCardValue11.Value
+                Width: =810
+                X: =0
+                Y: =0
+                ZIndex: =2
+
+                DataCardKey11 As Text:
+                    DisplayMode: =DisplayMode.Edit
+                    Height: =22
+                    Text: =Parent.DisplayName
+                    Weight: ='TextCanvas.Weight'.Semibold
+                    Width: =Parent.Width - 48
+                    Wrap: =false
+                    X: =24
+                    Y: =10
+                    ZIndex: =1
+
+                "DataCardValue11 As 'Text input'":
+                    AccessibleLabel: =Parent.DisplayName
+                    DisplayMode: =Parent.DisplayMode
+                    FontColor: =
+                    Height: =32
+                    Mode: ="'TextInputCanvas.Mode'.TextInputModeSingleLine"
+                    Required: =Parent.Required
+                    ValidationState: =If(And(Not(localNameValidation),localSubmitFormvalidation),"Error","None")
+                    Value: =Parent.Default
+                    Width: =Parent.Width - 48
+                    X: =24
+                    Y: =DataCardKey11.Y + DataCardKey11.Height + 4
+                    ZIndex: =2
+
+                ErrorMessage11 As Text:
+                    DisplayMode: =DisplayMode.Edit
+                    FontColor: =Color.Red
+                    Height: =30
+                    Text: =If(DataCardValue11.ValidationState="Error","Name Required")
+                    Visible: =If(DataCardValue11.ValidationState = "Error", true, false)
+                    Width: =Parent.Width - 48
+                    Wrap: =true
+                    X: =24
+                    Y: =DataCardValue11.Y + DataCardValue11.Height
+                    ZIndex: =3
+
+                StarVisible11 As Text:
+                    Align: ='TextCanvas.Align'.Center
+                    DisplayMode: =DisplayMode.Edit
+                    Height: =30
+                    Text: ="*"
+                    Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                    Width: =30
+                    X: =0
+                    Y: =DataCardKey11.Y
+                    ZIndex: =4
+
+            Age_DataCard2 As typedDataCard.fluentV9NumberEditCard:
+                BorderColor: =App.Theme.Colors.Darker40
+                BorderStyle: =BorderStyle.Solid
+                DataField: ="Age"
+                Default: =ThisItem.Age
+                DisplayMode: =Parent.DisplayMode
+                DisplayName: =DataSourceInfo([@EmployeeValidation],DataSourceInfo.DisplayName,Age)
+                Fill: =RGBA(0, 0, 0, 0)
+                Height: =80
+                Required: =false
+                Update: =
+                Width: =810
+                X: =0
+                Y: =1
+                ZIndex: =2
+
+                DataCardKey12 As Text:
+                    DisplayMode: =DisplayMode.Edit
+                    Height: =22
+                    Text: =Parent.DisplayName
+                    Weight: ='TextCanvas.Weight'.Semibold
+                    Width: =Parent.Width - 48
+                    Wrap: =false
+                    X: =24
+                    Y: =10
+                    ZIndex: =1
+
+                "DataCardValue12 As 'Text input'":
+                    AccessibleLabel: =If(Parent.Required, Substitute("{0}. Required.", "{0}", Parent.DisplayName), Parent.DisplayName)
+                    DisplayMode: =Parent.DisplayMode
+                    Height: =32
+                    ValidationState: =If(And(Not(localAgeValidation),localSubmitFormvalidation),"Error","None")
+                    Value: =Parent.Default
+                    Visible: =true
+                    Width: =Parent.Width - 48
+                    X: =24
+                    Y: =DataCardKey12.Y + DataCardKey12.Height + 4
+                    ZIndex: =2
+
+                ErrorMessage12 As Text:
+                    DisplayMode: =DisplayMode.Edit
+                    FontColor: =Color.Red
+                    Height: =30
+                    Text: =If(DataCardValue12.ValidationState = "Error","Age must not be less than 15")
+                    Visible: =If(DataCardValue12.ValidationState = "Error", true, false)
+                    Width: =Parent.Width - 48
+                    Wrap: =true
+                    X: =24
+                    Y: =DataCardValue12.Y + DataCardValue12.Height
+                    ZIndex: =3
+
+                StarVisible12 As Text:
+                    Align: ='TextCanvas.Align'.Center
+                    DisplayMode: =DisplayMode.Edit
+                    Height: =30
+                    Text: ="*"
+                    Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                    Width: =30
+                    X: =0
+                    Y: =DataCardKey12.Y
+                    ZIndex: =4
+
+            Department_DataCard2 As typedDataCard.fluentV9ComboBoxEditCard:
+                BorderColor: =App.Theme.Colors.Darker40
+                BorderStyle: =BorderStyle.Solid
+                DataField: ="Department"
+                Default: =ThisItem.Department
+                DisplayMode: =Parent.DisplayMode
+                DisplayName: =DataSourceInfo([@EmployeeValidation],DataSourceInfo.DisplayName,Department)
+                Fill: =RGBA(0, 0, 0, 0)
+                Height: =80
+                Required: =false
+                Update: =DataCardValue17.Selected
+                Width: =810
+                X: =0
+                Y: =2
+                ZIndex: =2
+
+                DataCardKey17 As Text:
+                    DisplayMode: =DisplayMode.Edit
+                    Height: =22
+                    Text: =Parent.DisplayName
+                    Weight: ='TextCanvas.Weight'.Semibold
+                    Width: =Parent.Width - 48
+                    Wrap: =false
+                    X: =24
+                    Y: =10
+                    ZIndex: =1
+
+                DataCardValue17 As Combobox.pcfdataset:
+                    AccessibleLabel: =If(Parent.Required, Substitute("{0}. Required.", "{0}", Parent.DisplayName), Parent.DisplayName)
+                    DefaultSelectedItems: =[Parent.Default]
+                    DisplayMode: =Parent.DisplayMode
+                    Height: =32
+                    Items: =Choices([@EmployeeValidation].Department)
+                    ValidationState: =If(And(Not(localDepartmentValidation),localSubmitFormvalidation),"Error","None")
+                    Width: =Parent.Width - 48
+                    X: =24
+                    Y: =DataCardKey17.Y + DataCardKey17.Height + 4
+                    ZIndex: =2
+
+                ErrorMessage17 As Text:
+                    DisplayMode: =DisplayMode.Edit
+                    FontColor: =Color.Red
+                    Height: =30
+                    Text: =If(DataCardValue17.ValidationState="Error", "Department Required")
+                    Visible: =If(DataCardValue17.ValidationState = "Error", true, false)
+                    Width: =Parent.Width - 48
+                    Wrap: =true
+                    X: =24
+                    Y: =DataCardValue17.Y + DataCardValue17.Height
+                    ZIndex: =3
+
+                StarVisible17 As Text:
+                    Align: ='TextCanvas.Align'.Center
+                    DisplayMode: =DisplayMode.Edit
+                    Height: =20
+                    Text: ="*"
+                    Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                    Width: =30
+                    X: =0
+                    Y: =DataCardKey17.Y
+                    ZIndex: =4
+
+            RegistrationDate_DataCard2 As typedDataCard.fluentV9DateEditCard:
+                BorderColor: =App.Theme.Colors.Darker40
+                BorderStyle: =BorderStyle.Solid
+                DataField: ="RegistrationDate"
+                Default: =ThisItem.RegistrationDate
+                DisplayMode: =Parent.DisplayMode
+                DisplayName: =DataSourceInfo([@EmployeeValidation],DataSourceInfo.DisplayName,RegistrationDate)
+                Fill: =RGBA(0, 0, 0, 0)
+                Height: =80
+                Required: =false
+                Update: =DataCardValue13.SelectedDate
+                Width: =810
+                X: =0
+                Y: =3
+                ZIndex: =2
+
+                DataCardKey13 As Text:
+                    DisplayMode: =DisplayMode.Edit
+                    Height: =22
+                    Text: =Parent.DisplayName
+                    Weight: ='TextCanvas.Weight'.Semibold
+                    Width: =Parent.Width - 48
+                    Wrap: =false
+                    X: =24
+                    Y: =10
+                    ZIndex: =1
+
+                "DataCardValue13 As 'Date picker'":
+                    AccessibleLabel: =If(Parent.Required, Substitute("{0}. Required.", "{0}", Parent.DisplayName), Parent.DisplayName)
+                    DisplayMode: =Parent.DisplayMode
+                    EndDate: =Date(Year(Today())+100, 12, 31)
+                    Height: =32
+                    SelectedDate: =Parent.Default
+                    StartDate: =Date(1900, 1, 1)
+                    ValidationState: =If(And(Not(localRegistrationDateValidation),localSubmitFormvalidation),"Error","None")
+                    Width: =Parent.Width - 48
+                    X: =24
+                    Y: =DataCardKey13.Y + DataCardKey13.Height + 4
+                    ZIndex: =2
+
+                ErrorMessage13 As Text:
+                    DisplayMode: =DisplayMode.Edit
+                    FontColor: =Color.Red
+                    Height: =30
+                    Text: =If(DataCardValue13.ValidationState = "Error", "Registration date must be grater than today")
+                    Visible: =If(DataCardValue13.ValidationState="Error", true, false)
+                    Width: =Parent.Width - 48
+                    Wrap: =true
+                    X: =24
+                    Y: =DataCardValue13.Y + DataCardValue13.Height
+                    ZIndex: =3
+
+                StarVisible13 As Text:
+                    Align: ='TextCanvas.Align'.Center
+                    DisplayMode: =DisplayMode.Edit
+                    Height: =30
+                    Text: ="*"
+                    Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                    Width: =30
+                    X: =0
+                    Y: =DataCardKey13.Y
+                    ZIndex: =4
+
+            PhoneNumber_DataCard2 As typedDataCard.fluentV9TextualEditCard:
+                BorderColor: =App.Theme.Colors.Darker40
+                BorderStyle: =BorderStyle.Solid
+                DataField: ="PhoneNumber"
+                Default: =ThisItem.PhoneNumber
+                DisplayMode: =Parent.DisplayMode
+                DisplayName: =DataSourceInfo([@EmployeeValidation],DataSourceInfo.DisplayName,PhoneNumber)
+                Fill: =RGBA(0, 0, 0, 0)
+                Height: =80
+                MaxLength: =DataSourceInfo([@EmployeeValidation], DataSourceInfo.MaxLength, PhoneNumber)
+                Required: =false
+                Update: =DataCardValue14.Value
+                Width: =810
+                X: =0
+                Y: =4
+                ZIndex: =2
+
+                DataCardKey14 As Text:
+                    DisplayMode: =DisplayMode.Edit
+                    Height: =22
+                    Text: =Parent.DisplayName
+                    Weight: ='TextCanvas.Weight'.Semibold
+                    Width: =Parent.Width - 48
+                    Wrap: =false
+                    X: =24
+                    Y: =10
+                    ZIndex: =1
+
+                "DataCardValue14 As 'Text input'":
+                    AccessibleLabel: =Parent.DisplayName
+                    DisplayMode: =Parent.DisplayMode
+                    Height: =32
+                    Mode: ="'TextInputCanvas.Mode'.TextInputModeSingleLine"
+                    Required: =Parent.Required
+                    ValidationState: =If(And(Not(localPhoneValidation),localSubmitFormvalidation),"Error","None")
+                    Value: =Parent.Default
+                    Width: =Parent.Width - 48
+                    X: =24
+                    Y: =DataCardKey14.Y + DataCardKey14.Height + 4
+                    ZIndex: =2
+
+                ErrorMessage14 As Text:
+                    DisplayMode: =DisplayMode.Edit
+                    FontColor: =Color.Red
+                    Height: =30
+                    Text: =If(DataCardValue14.ValidationState = "Error", "Invalid Phone Number", "None")
+                    Visible: =If(DataCardValue14.ValidationState = "Error", true, false)
+                    Width: =Parent.Width - 48
+                    Wrap: =true
+                    X: =24
+                    Y: =DataCardValue14.Y + DataCardValue14.Height
+                    ZIndex: =3
+
+                StarVisible14 As Text:
+                    Align: ='TextCanvas.Align'.Center
+                    DisplayMode: =DisplayMode.Edit
+                    Height: =30
+                    Text: ="*"
+                    Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                    Width: =30
+                    X: =0
+                    Y: =DataCardKey14.Y
+                    ZIndex: =4
+
+            Email_DataCard2 As typedDataCard.fluentV9TextualEditCard:
+                BorderColor: =App.Theme.Colors.Darker40
+                BorderStyle: =BorderStyle.Solid
+                DataField: ="Email"
+                Default: =ThisItem.Email
+                DisplayMode: =Parent.DisplayMode
+                DisplayName: =DataSourceInfo([@EmployeeValidation],DataSourceInfo.DisplayName,Email)
+                Fill: =RGBA(0, 0, 0, 0)
+                Height: =80
+                MaxLength: =DataSourceInfo([@EmployeeValidation], DataSourceInfo.MaxLength, Email)
+                Required: =false
+                Update: =DataCardValue15.Value
+                Width: =810
+                X: =0
+                Y: =5
+                ZIndex: =2
+
+                DataCardKey15 As Text:
+                    DisplayMode: =DisplayMode.Edit
+                    Height: =22
+                    Text: =Parent.DisplayName
+                    Weight: ='TextCanvas.Weight'.Semibold
+                    Width: =Parent.Width - 48
+                    Wrap: =false
+                    X: =24
+                    Y: =10
+                    ZIndex: =1
+
+                "DataCardValue15 As 'Text input'":
+                    AccessibleLabel: =Parent.DisplayName
+                    DisplayMode: =Parent.DisplayMode
+                    Height: =32
+                    Mode: ="'TextInputCanvas.Mode'.TextInputModeSingleLine"
+                    Required: =Parent.Required
+                    ValidationState: =If(And(Not(localEmailValidation),localSubmitFormvalidation),"Error","None")
+                    Value: =Parent.Default
+                    Width: =Parent.Width - 48
+                    X: =24
+                    Y: =DataCardKey15.Y + DataCardKey15.Height + 4
+                    ZIndex: =2
+
+                ErrorMessage15 As Text:
+                    DisplayMode: =DisplayMode.Edit
+                    FontColor: =Color.Red
+                    Height: =30
+                    Text: =If(DataCardValue15.ValidationState = "Error", "Invalid Email","None")
+                    Visible: =If(DataCardValue15.ValidationState = "Error", true, false)
+                    Width: =Parent.Width - 48
+                    Wrap: =true
+                    X: =24
+                    Y: =DataCardValue15.Y + DataCardValue15.Height
+                    ZIndex: =3
+
+                StarVisible15 As Text:
+                    Align: ='TextCanvas.Align'.Center
+                    DisplayMode: =DisplayMode.Edit
+                    Height: =30
+                    Text: ="*"
+                    Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                    Width: =30
+                    X: =0
+                    Y: =DataCardKey15.Y
+                    ZIndex: =4
+
+            Address_DataCard2 As typedDataCard.fluentV9TextualEditCard:
+                BorderColor: =App.Theme.Colors.Darker40
+                BorderStyle: =BorderStyle.Solid
+                DataField: ="Address"
+                Default: =ThisItem.Address
+                DisplayMode: =Parent.DisplayMode
+                DisplayName: =DataSourceInfo([@EmployeeValidation],DataSourceInfo.DisplayName,Address)
+                Fill: =RGBA(0, 0, 0, 0)
+                Height: =125
+                MaxLength: =DataSourceInfo([@EmployeeValidation], DataSourceInfo.MaxLength, Address)
+                Required: =false
+                Update: =DataCardValue16.Value
+                Width: =810
+                X: =0
+                Y: =6
+                ZIndex: =2
+
+                DataCardKey16 As Text:
+                    DisplayMode: =DisplayMode.Edit
+                    Height: =22
+                    Text: =Parent.DisplayName
+                    Weight: ='TextCanvas.Weight'.Semibold
+                    Width: =Parent.Width - 48
+                    Wrap: =false
+                    X: =24
+                    Y: =10
+                    ZIndex: =1
+
+                "DataCardValue16 As 'Text input'":
+                    AccessibleLabel: =Parent.DisplayName
+                    DisplayMode: =Parent.DisplayMode
+                    Height: =62
+                    Mode: ='TextInputCanvas.Mode'.Multiline
+                    Required: =Parent.Required
+                    ValidationState: =If(And(Not(localAddressValidation),localSubmitFormvalidation),"Error","None")
+                    Value: =
+                    Width: =Parent.Width - 48
+                    X: =24
+                    Y: =DataCardKey16.Y + DataCardKey16.Height + 4
+                    ZIndex: =2
+
+                ErrorMessage16 As Text:
+                    DisplayMode: =DisplayMode.Edit
+                    FontColor: =Color.Red
+                    Height: =30
+                    Text: =If(DataCardValue16.ValidationState = "Error", "Invalid Address")
+                    Visible: =If(DataCardValue16.ValidationState = "Error", true, false)
+                    Width: =Parent.Width - 48
+                    Wrap: =true
+                    X: =24
+                    Y: =DataCardValue16.Y + DataCardValue16.Height
+                    ZIndex: =3
+
+                StarVisible16 As Text:
+                    Align: ='TextCanvas.Align'.Center
+                    DisplayMode: =DisplayMode.Edit
+                    Height: =30
+                    Text: ="*"
+                    Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                    Width: =30
+                    X: =0
+                    Y: =DataCardKey16.Y
+                    ZIndex: =4
+
+    btnSave As Button:
+        DisplayMode: =DisplayMode.Edit
+        Height: =40
+        OnSelect: |-
+            =//checking for form validation
+            UpdateContext({localSubmitFormvalidation: true});
+            // Name validation
+            UpdateContext({localNameValidation:!IsBlank(DataCardValue11.Value)});
+            // Age Validation
+            UpdateContext({localAgeValidation:Value(DataCardValue12.Value)>20});
+            // RegistrationDate validation
+            UpdateContext({localRegistrationDateValidation: DataCardValue13.SelectedDate>Today()});
+            // Phone Validation
+            UpdateContext({localPhoneValidation: IsMatch(DataCardValue14.Value,Match.Digit&Match.Digit&Match.Digit&"-"&Match.Digit&Match.Digit&Match.Digit&Match.Digit&"-"&Match.Digit&Match.Digit&Match.Digit)});
+            // Email Validation
+            UpdateContext({localEmailValidation: IsMatch(DataCardValue15.Value,Match.Email)});
+            //Department Validation
+            UpdateContext({localDepartmentValidation: !IsBlank(DataCardValue17.Selected)});
+            //Address Validation
+            UpdateContext({localAddressValidation: Len(DataCardValue16.Value)>15});
+            
+            //Form submission validation
+            If(And(localAddressValidation,localAgeValidation,localDepartmentValidation,localNameValidation,localPhoneValidation,localRegistrationDateValidation,localSubmitFormvalidation),SubmitForm('Employee Form'),Notify("Validation error",NotificationType.Error));
+        Text: ="Register"
+        Width: =96
+        X: =562
+        Y: =702
+        ZIndex: =2
+
+    Button1 As button:
+        BorderColor: =App.Theme.Colors.Primary
+        Color: =App.Theme.Colors.PrimaryForeground
+        DisabledBorderColor: =RGBA(244, 244, 244, 1)
+        DisabledColor: =RGBA(166, 166, 166, 1)
+        DisabledFill: =RGBA(244, 244, 244, 1)
+        Fill: =App.Theme.Colors.Primary
+        Font: =App.Theme.Font
+        FontWeight: =FontWeight.Semibold
+        Height: =41
+        HoverBorderColor: =App.Theme.Colors.Darker10
+        HoverColor: =App.Theme.Colors.PrimaryForeground
+        HoverFill: =App.Theme.Colors.Darker10
+        OnSelect: =Print();
+        PressedBorderColor: =App.Theme.Colors.Darker40
+        PressedColor: =Self.Color
+        PressedFill: =App.Theme.Colors.Darker40
+        Size: =15
+        Text: ="Print PDF"
+        Visible: =If(Icon.Print,false,true)
+        Width: =115
+        X: =682
+        Y: =702
+        ZIndex: =3
+
